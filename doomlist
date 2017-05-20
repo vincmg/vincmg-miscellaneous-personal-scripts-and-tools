@@ -1,12 +1,17 @@
 #!/bin/bash
 
-MYWADS=$HOME/Downloads/Doom/WADs
+# if an environment variable WADS is set, search for WADs in that directory
+MYWADS=${WADS:-$HOME/Downloads/Doom/WADs}
+
 
 function print_help {
-	echo "Usage: doomlist [OPTION] [WADNAME]"
+	echo "Usage: doomlist [OPTION]... [WADNAME]"
 	echo "    If no options are specified, list .wad and .pk3 files in MYWADS"
-	echo "    WADNAME       load WADNAME into gzdoom and play\n"
+	echo "    If an env var WADS is set, MYWADS is set to WADS instead of the default"
+	echo
+	echo "    WADNAME       load WADNAME into gzdoom and play"
 	echo "    -a FILE       add FILE to the MYWADS directory"
+	echo "    -d PATH       search for Doom wads in PATH instead of default"
 	echo "    -r FILE       remove FILE from the MYWADS directory"
 	echo "    -h            display this message"
 	exit 1
@@ -20,12 +25,15 @@ then
 	exit
 fi
 
-while getopts "a:hr:" OPT
+while getopts "a:d:hr:" OPT
 do
 	case "$OPT" in
 		a)
 			cp -v $OPTARG $MYWADS
 			exit
+			;;
+		d)	
+			MYWADS=$OPTARG
 			;;
 		r)
 			rm -v $MYWADS/$OPTARG
