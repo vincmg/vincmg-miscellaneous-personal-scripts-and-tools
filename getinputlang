@@ -1,0 +1,5 @@
+#!/bin/bash
+
+engine=$(ibus engine)
+
+echo ${engine#*::}
