@@ -1,0 +1,15 @@
+#!/bin/bash
+
+status=$(fcitx-remote)
+
+case $status in
+	0)
+		echo ""
+		;;
+	1)
+		echo "en"
+		;;
+	2)
+		echo "mozc-jp"
+		;;
+esac
