@@ -1,0 +1,6 @@
+#!/bin/bash
+
+WINDRV=${WINDOWS_DRIVE:-/dev/sda5}
+WINLOC=${WINDOWS_PATH:-/media/vincent}
+
+sudo mount $WINDRV $WINLOC

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+WINLOC=${WINDOWS_PATH:-/media/vincent}
+
+sudo umount $WINLOC
