@@ -1,0 +1,11 @@
+#!/bin/bash
+
+git status
+if [ $? -ne 0 ]; then
+	exit 1
+fi
+
+echo "The above changes will be commited to your repository."
+read -sr -n 1 -p "Press any key to continue or Ctrl-C to cancel." 
+git commit -a -m "$(date +%F)"
+git push
