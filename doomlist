@@ -12,7 +12,8 @@ function print_help {
 	echo "    WADNAME       load WADNAME into gzdoom and play"
 	echo "    -a FILE       add FILE to the MYWADS directory"
 	echo "    -d PATH       search for Doom wads in PATH instead of default"
-	echo "    -l OPTIONS    list information about files in MYWADS directory"
+	echo "    -l            list information about files in MYWADS directory"
+	echo "    -L OPTIONS    list information about files in MYWADS directory"
     echo "                      with options OPTIONS (do not include leading hyphen)"
 	echo "    -r FILE       remove FILE from the MYWADS directory"
 	echo "    -h            display this message"
@@ -27,7 +28,7 @@ then
 	exit
 fi
 
-while getopts "a:d:l::hr:" OPT
+while getopts "a:d:lL:hr:" OPT
 do
 	case "$OPT" in
 		a)
@@ -38,6 +39,10 @@ do
 			MYWADS=$OPTARG
 			;;
         l)
+            ls -l $MYWADS
+            exit
+            ;;
+        L)
             ls -l -$OPTARG $MYWADS
             exit
             ;;
@@ -57,9 +62,9 @@ do
 done
 shift $((OPTIND - 1))
 
-if [ -e $MYWADS/$1 ]
+if [ -e $MYWADS/$1* ]
 then
-	gzdoom $MYWADS/$1
+	gzdoom $MYWADS/$1*
 else
 	echo "$1 not found in $MYWADS"
 fi
