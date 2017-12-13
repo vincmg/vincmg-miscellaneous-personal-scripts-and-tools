@@ -22,11 +22,15 @@ function print_help {
 	exit 1
 }
 
-if [ $# -eq 0 ] 
-then
+function list_wads {
 	wadlist=$(find $MYWADS \( -iname *.wad -o -iname *.pk3 \) \! -iname DOOM* -printf "%f\n" | sort)
 
 	printf "%-17s %-17s %-17s %-17s\n" $(echo $wadlist)
+}
+
+if [ $# -eq 0 ]
+then
+	list_wads
 	exit
 fi
 
@@ -41,7 +45,7 @@ do
 			MYWADS=$OPTARG
 			;;
 		D)	
-            ENGINE=$(realpath $OPTARG)
+	        ENGINE=$(realpath $OPTARG)
 			;;
 		l)
 		    ls -l $MYWADS
@@ -69,7 +73,8 @@ shift $((OPTIND - 1))
 
 if [ -z "$1" ]
 then
-    exit
+	list_wads
+	exit
 fi
 
 if [ -e $MYWADS/$1* ]
