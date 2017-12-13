@@ -3,6 +3,7 @@
 # if an environment variable WADS is set, search for WADs in that directory
 MYWADS=${WADS:-$HOME/Downloads/Doom/WADs}
 
+ENGINE=gzdoom
 
 function print_help {
 	echo "Usage: doomlist [OPTION]... [WADNAME]"
@@ -12,6 +13,7 @@ function print_help {
 	echo "    WADNAME       load WADNAME into gzdoom and play"
 	echo "    -a FILE       add FILE to the MYWADS directory"
 	echo "    -d PATH       search for Doom wads in PATH instead of default"
+	echo "    -D ENGINEPATH use doom engine executable at PATH instead of default"
 	echo "    -l            list information about files in MYWADS directory"
 	echo "    -L OPTIONS    list information about files in MYWADS directory"
 	echo "                      with options OPTIONS (do not include leading hyphen)"
@@ -28,7 +30,7 @@ then
 	exit
 fi
 
-while getopts "a:d:lL:hr:" OPT
+while getopts "a:d:D:lL:hr:" OPT
 do
 	case "$OPT" in
 		a)
@@ -37,6 +39,9 @@ do
 			;;
 		d)	
 			MYWADS=$OPTARG
+			;;
+		D)	
+            ENGINE=$(realpath $OPTARG)
 			;;
 		l)
 		    ls -l $MYWADS
@@ -62,9 +67,14 @@ do
 done
 shift $((OPTIND - 1))
 
+if [ -z "$1" ]
+then
+    exit
+fi
+
 if [ -e $MYWADS/$1* ]
 then
-	gzdoom $MYWADS/$1*
+	"$ENGINE" $MYWADS/$1*
 else
 	echo "$1 not found in $MYWADS"
 fi
