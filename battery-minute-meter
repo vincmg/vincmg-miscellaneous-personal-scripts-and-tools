@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+battprog=~/bin/battery
+
+while true; do
+    echo -en "$($battprog)\r"
+    sleep 1m
+done
