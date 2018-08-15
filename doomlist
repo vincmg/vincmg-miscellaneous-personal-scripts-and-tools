@@ -77,9 +77,11 @@ then
 	exit
 fi
 
-if [ -e $MYWADS/$1* ]
+WAD=$MYWADS/$1*
+
+if [ -e $WAD ]
 then
-	"$ENGINE" $MYWADS/$1*
+	"$ENGINE" $WAD
 else
 	echo "$1 not found in $MYWADS"
 fi
