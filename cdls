@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-set -e 
+DIR=${1:-$HOME}
 
-cd "$1"
+cd "$DIR"
 shift
 ls "$@"
