@@ -23,9 +23,9 @@ function print_help {
 }
 
 function list_wads {
-	wadlist=$(find $MYWADS \( -iname *.wad -o -iname *.pk3 \) \! -iname DOOM* -printf "%f\n" | sort)
-
-	printf "%-17s %-17s %-17s %-17s\n" $(echo $wadlist)
+	#wadlist=$(find $MYWADS \( -iname *.wad -o -iname *.pk3 \) \! -iname DOOM* -printf "%f\n" | sort)
+	#printf "%-17s %-17s %-17s %-17s\n" $(echo $wadlist)
+    ls -lt $MYWADS/*.wad
 }
 
 if [ $# -eq 0 ]
