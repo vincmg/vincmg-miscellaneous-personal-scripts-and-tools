@@ -26,6 +26,7 @@ while getopts "i:o:" opt; do
             ;;
         h)
             echo 'wav-to-mp3 -i [input.wav] -o [output_dir]'
+            exit 1
             ;;
         *)
             echo >&2 "unrecognized option $OPTARG"
