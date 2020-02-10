@@ -5,42 +5,29 @@ if [ "$#" -eq 0 ]; then
     exit 1
 fi
 
-input_file=
-output_dir=
-
 while getopts "i:o:" opt; do
     case "$opt" in
-        i)
-            input_file="$OPTARG"
-            if [[ ! ( "$input_file" =~ .*\.wav ) ]]; then
-                echo >&2 "must be a wav file"
-                exit 1
-            fi
-            ;;
-        o)
-            output_dir="$OPTARG"
-            if [ ! -d "$output_dir" ]; then
-                echo >&2 "-o must be a directory"
-                exit 1
-            fi
-            ;;
         h)
-            echo 'wav-to-mp3 -i [input.wav] -o [output_dir]'
+            echo 'wav-to-mp3 [input.wav] [output_dir]'
             exit 1
             ;;
         *)
+            echo 'wav-to-mp3 [input.wav] [output_dir]'
             echo >&2 "unrecognized option $OPTARG"
             exit 1
     esac 
 done
+shift $((OPTIND - 1))
 
-if [ -z "$input_file" ]; then
-    echo >&2 "no input file specified"
+input_file="$1"
+if [[ ! ( "$input_file" =~ .*\.wav ) ]]; then
+    echo >&2 "must be a wav file"
     exit 1
 fi
 
-if [ -z "$output_dir" ]; then
-    echo >&2 "no output directory specified"
+output_dir="$2"
+if [ ! -d "$output_dir" ]; then
+    echo >&2 "-o must be a directory"
     exit 1
 fi
 
