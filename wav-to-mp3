@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 if [ "$#" -eq 0 ]; then
-    echo 'wav-to-mp3 -i [input.wav] -o [directory]'
+    echo 'wav-to-mp3 [input.wav] [output directory]'
     exit 1
 fi
 
 while getopts "i:o:" opt; do
     case "$opt" in
         h)
-            echo 'wav-to-mp3 [input.wav] [output_dir]'
+            echo 'wav-to-mp3 [input.wav] [output directory]'
             exit 1
             ;;
         *)
-            echo 'wav-to-mp3 [input.wav] [output_dir]'
+            echo 'wav-to-mp3 [input.wav] [output directory]'
             echo >&2 "unrecognized option $OPTARG"
             exit 1
     esac 
@@ -21,16 +21,16 @@ shift $((OPTIND - 1))
 
 input_file="$1"
 if [[ ! ( "$input_file" =~ .*\.wav ) ]]; then
-    echo >&2 "must be a wav file"
+    echo >&2 "input must be a wav file"
     exit 1
 fi
 
 output_dir="$2"
 if [ ! -d "$output_dir" ]; then
-    echo >&2 "-o must be a directory"
+    echo >&2 "output must be a directory"
     exit 1
 fi
 
-filename=${input_file%.*}
+filename=$(basename ${input_file%.*})
 
 ffmpeg -i "${input_file}" -vn -ar 44100 -ac 2 -b:a 320k "${output_dir:?no output directory specified}/${filename}.mp3"
